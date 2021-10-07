@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button num1,num2,num3,num4,num5,num6,num7,num8, num9, num0, plus, minus, multiply,share,clear, res;
@@ -63,19 +65,18 @@ public class MainActivity extends AppCompatActivity {
         res.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (move)
-                {
+                switch (move) {
                     case "plus":
-                        text_view_res.setText(String.valueOf(Integer.parseInt(first_num.getText().toString())+Integer.parseInt(second_num.getText().toString())));
+                        text_view_res.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) + Double.parseDouble(second_num.getText().toString())));
                         break;
                     case "minus":
-                        text_view_res.setText(String.valueOf(Integer.parseInt(first_num.getText().toString())-Integer.parseInt(second_num.getText().toString())));
+                        text_view_res.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) - Double.parseDouble(second_num.getText().toString())));
                         break;
                     case "share":
-                        text_view_res.setText(String.valueOf(Double.parseDouble(first_num.getText().toString())/Double.parseDouble(second_num.getText().toString())));
+                        text_view_res.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) / Double.parseDouble(second_num.getText().toString())));
                         break;
                     case "multiply":
-                        text_view_res.setText(String.valueOf(Integer.parseInt(first_num.getText().toString())*Integer.parseInt(second_num.getText().toString())));
+                        text_view_res.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) * Double.parseDouble(second_num.getText().toString())));
                         break;
                 }
             }
@@ -200,6 +201,8 @@ public class MainActivity extends AppCompatActivity {
                     second_num.setText(second_num.getText()+"0");
                 }
                 break;
+
+
         }
 
     }
@@ -208,22 +211,61 @@ public class MainActivity extends AppCompatActivity {
     public void SelectMove(View v)
     {
         first_num_null = false;
+        resu();
         switch (v.getId())
         {
             case R.id.button_plus:
                 move = "plus";
+                try {
+                    second_num.setText("");
+                }
+                catch (Exception ex){}
                 break;
             case R.id.button_minus:
                 move = "minus";
+                try {
+                    second_num.setText("");
+                }
+                catch (Exception ex){}
                 break;
             case R.id.button_multiply:
                 move = "multiply";
+                try {
+                    second_num.setText("");
+                }
+                catch (Exception ex){}
                 break;
             case R.id.button_share:
                 move = "share";
+                try {
+                    second_num.setText("");
+                }
+                catch (Exception ex){}
                 break;
 
         }
+    }
+
+
+    public void resu()
+    {
+        try {
+            switch (move) {
+                case "plus":
+                    first_num.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) + Double.parseDouble(second_num.getText().toString())));
+                    break;
+                case "minus":
+                    first_num.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) - Double.parseDouble(second_num.getText().toString())));
+                    break;
+                case "share":
+                    first_num.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) / Double.parseDouble(second_num.getText().toString())));
+                    break;
+                case "multiply":
+                    first_num.setText(String.valueOf(Double.parseDouble(first_num.getText().toString()) * Double.parseDouble(second_num.getText().toString())));
+                    break;
+            }
+        }
+        catch (Exception ex){};
     }
 
 
